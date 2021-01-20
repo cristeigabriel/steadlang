@@ -44,8 +44,10 @@ if you're too lazy to check [main.c](https://github.com/cristeigabriel/steadlang
 ```
   struct _lexer_settings settings;
   settings.file_expected_extension = ".sl";
+  settings.file_extension_mismatch = warning;
   settings.file_read_safety = true;
-  settings.file_extension_mismatch = serious_warning;
+  settings.file_read_sizes_mismatch = error;
+  settings.file_size_too_big_error = true;
 
   struct _lexer_instance *instance =
       (struct _lexer_instance *)malloc(sizeof(struct _lexer_instance));
@@ -62,6 +64,7 @@ if you're too lazy to check [main.c](https://github.com/cristeigabriel/steadlang
   else
     logger_log(error, "lexer failed to initialize\n");
 
+  free(instance->file);
   free(instance);
   logger_flush();
 ```
