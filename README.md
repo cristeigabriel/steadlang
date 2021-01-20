@@ -1,8 +1,10 @@
 # steadlang
 simple in-development toy language written in C, only planned to be interpreted.
 
-# in-development
-currently, there's only a lexer with a set of settings, with a concept implementation, that's passed argv[1], a modular logger, and file helpers (currently there's only extension checker).
+# contributing
+if you see anything that you believe should be subject to change, and have motivations for the change you're providing, please proceed to create a [pull request](https://github.com/cristeigabriel/steadlang/pulls). if you're unsure as to if you should open a pull request with what you've done, or if you want to work on a feature but are not sure if it would fit in the steadlang system, proceed to create an [issue](https://github.com/cristeigabriel/steadlang/issues) which will allow us to discuss the matter.
+
+to start contributing, please first take on the next steps to get yourself set with steadlang.
 
 # build locally
 first, do:
