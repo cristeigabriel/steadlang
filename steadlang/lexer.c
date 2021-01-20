@@ -2,7 +2,9 @@
 
 bool lexer_initialize(struct _lexer_instance *instance, const char *filename) {
   if (instance == NULL) {
-    logger_log(error, "failed getting instance (%p)\n", &instance);
+    logger_log(error,
+               "failed to initialize lexer instance (%p), returned NULL\n",
+               &instance);
     return false;
   }
 
