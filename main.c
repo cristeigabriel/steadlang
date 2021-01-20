@@ -10,7 +10,7 @@ int main(int argc, char **argv) {
   struct _lexer_settings settings;
   settings.file_expected_extension = ".sl";
   settings.file_read_safety = true;
-  settings.file_extension_mismatch = serious_warning;
+  settings.file_extension_mismatch = warning;
 
   struct _lexer_instance *instance =
       (struct _lexer_instance *)malloc(sizeof(struct _lexer_instance));
