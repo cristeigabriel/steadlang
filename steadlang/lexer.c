@@ -68,7 +68,10 @@ bool lexer_initialize(struct _lexer_instance *instance, const char *filename) {
       }
     }
 
-    fclose(file);
+    if (fclose(file) == EOF) {
+      logger_log(error, "failed at fclose, returned EOF (-1)\n");
+      return false;
+    }
   }
 
   return true;
