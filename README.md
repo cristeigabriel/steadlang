@@ -7,6 +7,11 @@ currently, there's only a lexer with a set of settings, with a concept implement
 # build locally
 first, do:
 ```
+git clone https://github.com/cristeigabriel/steadlang.git
+```
+
+then, do:
+```
 $ steadlang-master/: cmake .
 ```
 
