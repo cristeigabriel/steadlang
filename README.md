@@ -56,6 +56,17 @@ krate is the in-the-plans binding system from C to steadlang. more information t
 
 # implementation
 if you're too lazy to check [main.c](https://github.com/cristeigabriel/steadlang/blob/main/main.c), here's how a base initialization *should* look:
+<details>
+
+<p align="center">
+<img src="resources/carbon.png">
+</p>
+
+i did say ***look*** like, didn't I?
+
+code:
+<details>
+    
 ```
   struct _lexer_settings lexer_settings;
   lexer_settings.file_expected_extension = ".sl";
@@ -114,6 +125,10 @@ if you're too lazy to check [main.c](https://github.com/cristeigabriel/steadlang
   logger_flush();
 
 ```
+
+</details>
+
+</details>
 
 # external libraries
 for ease, I use:
