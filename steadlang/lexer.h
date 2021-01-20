@@ -1,6 +1,8 @@
 #ifndef lexerheader
 #define lexerheader
 
+#include <errno.h>
+#include <limits.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -8,7 +10,9 @@
 #include "../utils/filehelpers.h"
 #include "../utils/logger.h"
 
-typedef unsigned long long lexer_size_type;
+extern int errno;
+
+typedef long long lexer_size_type;
 
 struct _lexer_settings {
   /**
@@ -24,9 +28,23 @@ struct _lexer_settings {
   bool file_read_safety;
 
   /**
-   * @brief level of error/logger color for extension mismatch
+   * @brief level of error/logger color for file/read mismatches
    *
    * if it's set to error, and there's a mismatch, lexer_initialize will fail
+   *
+   */
+  logger_warning_type file_read_sizes_mismatch;
+
+  /**
+   * @brief logs and exits when file_size > LLONG_MAX if set to true
+   *
+   */
+  bool file_size_too_big_error;
+
+  /**
+   * @brief level of error/logger color for extension mismatch
+   *
+   * ditto
    *
    */
   logger_warning_type file_extension_mismatch;

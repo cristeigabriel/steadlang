@@ -1,6 +1,11 @@
 #include "lexer.h"
 
 bool lexer_initialize(struct _lexer_instance *instance, const char *filename) {
+  if (instance == NULL) {
+    logger_log(error, "failed getting instance (%p)\n", &instance);
+    return false;
+  }
+
   const char *extension = filehelpers_get_extension(filename);
   if (strcmp(extension, instance->lexer_settings.file_expected_extension) !=
       0) {
@@ -9,11 +14,6 @@ bool lexer_initialize(struct _lexer_instance *instance, const char *filename) {
                instance->lexer_settings.file_expected_extension, extension);
     if (instance->lexer_settings.file_extension_mismatch == error)
       return false;
-  }
-
-  if (instance == NULL) {
-    logger_log(error, "failed getting instance (%p)\n", &instance);
-    return false;
   }
 
   FILE *file = NULL;
@@ -27,21 +27,45 @@ bool lexer_initialize(struct _lexer_instance *instance, const char *filename) {
   if (file) {
     lexer_size_type file_size = 0, read_size = 0;
 
-    fseek(file, 0, SEEK_END);
+    if (fseek(file, 0, SEEK_END) == -1) {
+      logger_log(error,
+                 "failed at fseek, perhaps file is unseekable? errno: %d\n",
+                 errno);
+      return false;
+    }
 
     file_size = ftell(file);
+    if (file_size == -1) {
+      logger_log(error, "failed at ftell, returned -1\n");
+      return false;
+    }
+
+    if (file_size > LLONG_MAX &&
+        instance->lexer_settings.file_size_too_big_error) {
+      logger_log(error, "file size bigger than LLONG_MAX (%lld)\n", LLONG_MAX);
+      return false;
+    }
+
     rewind(file);
 
     instance->file = (char *)malloc(sizeof(char) * (file_size + 1));
     read_size = fread(instance->file, sizeof(char), file_size, file);
+    if (read_size == 0) {
+      logger_log(error, "failed at fread, returned 0\n");
+      return false;
+    }
 
     instance->file[file_size] = '\0';
 
     if (file_size != read_size && instance->lexer_settings.file_read_safety) {
-      logger_log(serious_warning, "failed reading entirety of %s\n", filename);
-      free(instance);
+      logger_log(instance->lexer_settings.file_read_sizes_mismatch,
+                 "failed reading entirety of %s\n", filename);
 
-      return false;
+      if (instance->lexer_settings.file_read_sizes_mismatch == error) {
+        free(instance);
+
+        return false;
+      }
     }
 
     fclose(file);
