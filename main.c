@@ -54,7 +54,7 @@ int main(int argc, char **argv) {
   if (tokenizer_initialize(tokenizer_instance))
     ;
   else {
-    logger_log(error, "tokenizer initializer returned false");
+    logger_log(error, "tokenizer initializer returned false\n");
     return 0;
   }
 
