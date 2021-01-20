@@ -36,35 +36,76 @@ $ steadlang-master/: make clean
 to get rid of the junk created by the compilation (and that includes the stead binary).
 
 # customizations
-you're currently able to customize the expected file extension, and a warning level on mismatch. if you make the extension mismatch level 'error', you'll intrerupt the parsing, which'll proceed to free the lexer instance and flush buffers.
-you're also able to ask for read safety, which'll check if the file size is bigger than the lexer read size. upon that, if you proceed to set it to true, it'll log a warning.
+refer to [main.c](https://github.com/cristeigabriel/steadlang/blob/main/main.c) to see all available ``[item]_settings`` customizations.
+
+# krate
+krate is the in-the-plans binding system from C to steadlang. more information to come with development.
 
 # implementation
 if you're too lazy to check [main.c](https://github.com/cristeigabriel/steadlang/blob/main/main.c), here's how a base initialization *should* look:
 ```
-  struct _lexer_settings settings;
-  settings.file_expected_extension = ".sl";
-  settings.file_extension_mismatch = warning;
-  settings.file_read_safety = true;
-  settings.file_read_sizes_mismatch = error;
-  settings.file_size_too_big_error = true;
+  struct _lexer_settings lexer_settings;
+  lexer_settings.file_expected_extension = ".sl";
+  lexer_settings.file_extension_mismatch = warning;
+  lexer_settings.file_read_safety = true;
+  lexer_settings.file_read_sizes_mismatch = error;
+  lexer_settings.file_size_too_big_error = true;
 
-  struct _lexer_instance *instance =
+  struct _lexer_instance *lexer_instance =
       (struct _lexer_instance *)malloc(sizeof(struct _lexer_instance));
 
-  if (instance == NULL) {
-    logger_log(error, "failed to initialize instance (%p)\n", &instance);
+  if (lexer_instance == NULL) {
+    logger_log(error,
+               "failed to initialize lexer instance (%p), returned NULL\n",
+               &lexer_instance);
     return 0;
   }
 
-  instance->lexer_settings = settings;
+  lexer_instance->lexer_settings = lexer_settings;
 
-  if (lexer_initialize(instance, argv[1]))
-    printf("%s\n", instance->file);
-  else
-    logger_log(error, "lexer failed to initialize\n");
+  struct _tokenizer_settings tokenizer_settings;
+  tokenizer_settings.krate = "krate";
+  tokenizer_settings.scope = "scope";
+  tokenizer_settings.scope_delimiter = "::";
 
-  free(instance->file);
-  free(instance);
+  struct _tokenizer_instance *tokenizer_instance =
+      (struct _tokenizer_instance *)malloc(sizeof(struct _tokenizer_instance));
+
+  if (tokenizer_instance == NULL) {
+    logger_log(error,
+               "failed to initialize tokenizer instance (%p), returned NULL\n",
+               &tokenizer_instance);
+    return 0;
+  }
+
+  tokenizer_instance->tokenizer_settings = tokenizer_settings;
+  tokenizer_instance->lexer = lexer_instance;
+
+  if (lexer_initialize(lexer_instance, argv[1]))
+    printf("%s\n", lexer_instance->file);
+  else {
+    logger_log(error, "lexer initializer returned false\n");
+    return 0;
+  }
+
+  if (tokenizer_initialize(tokenizer_instance))
+    ;
+  else {
+    logger_log(error, "tokenizer initializer returned false");
+    return 0;
+  }
+
+  free(lexer_instance->file);
+  free(lexer_instance);
+  free(tokenizer_instance);
   logger_flush();
+
 ```
+
+# external libraries
+for ease, I use:
+- [a C, small, vector library by Mashpoe](https://github.com/Mashpoe/c-vector)
+
+all external libraries go to /vendor/, and will be credited here accordingly.
+
+note: there might be modifications to the libraries used to fit our use scenarios.
