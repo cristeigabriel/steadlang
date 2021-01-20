@@ -10,7 +10,8 @@ bool lexer_initialize(struct _lexer_instance *instance, const char *filename) {
 
   const char *extension = filehelpers_get_extension(filename);
   if (strcmp(extension, instance->lexer_settings.file_expected_extension) !=
-      0) {
+          0 &&
+      strcmp(extension, "") != 0) {
     logger_log(instance->lexer_settings.file_extension_mismatch,
                "file extension is not '%s' but '%s'\n",
                instance->lexer_settings.file_expected_extension, extension);
