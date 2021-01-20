@@ -33,6 +33,7 @@ int main(int argc, char **argv) {
   else
     logger_log(error, "lexer failed to initialize\n");
 
+  free(instance->file);
   free(instance);
   logger_flush();
 
