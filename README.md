@@ -37,6 +37,9 @@ $ steadlang-master/: ./stead
 
 which'll inform you that you also have to pass a file next to the command.
 
+
+if you have troubles though, refer to the [build test configuration](https://github.com/cristeigabriel/steadlang/blob/main/.github/workflows/cmake.yml).
+
 # cleaning up
 considering you've proceeded to build steadlang locally, and by that, have also used the tips aforementioned, you should have a ``Makefile`` in the same folder as with your binary, and considering that's the case, you can just run:
 ```
