@@ -62,6 +62,7 @@ bool lexer_initialize(struct _lexer_instance *instance, const char *filename) {
                  "failed reading entirety of %s\n", filename);
 
       if (instance->lexer_settings.file_read_sizes_mismatch == error) {
+        free(instance->file);
         free(instance);
 
         return false;
