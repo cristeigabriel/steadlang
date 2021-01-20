@@ -1,8 +1,8 @@
 # steadlang
-simple in-development toy language written in C, only planned to be interpreted
+simple in-development toy language written in C, only planned to be interpreted.
 
 # in-development
-currently, there's only a lexer with a set of settings, with a concept implementation, that's passed argv[1], a modular logger, and file helpers (currently there's only extension checker)
+currently, there's only a lexer with a set of settings, with a concept implementation, that's passed argv[1], a modular logger, and file helpers (currently there's only extension checker).
 
 # build locally
 first, do:
