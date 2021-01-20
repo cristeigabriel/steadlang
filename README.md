@@ -3,6 +3,9 @@
 </p>
 steadlang - a simple in-development toy language written in C, only planned to be interpreted.
 
+# build tests
+![Linux](https://github.com/cristeigabriel/steadlang/workflows/CMake/badge.svg)
+
 # in-development
 the language is currently in early development. it is not yet a language due to tokenizer being in the works. that means, it is not yet usable. it does not yet have a clear syntax outside of the current, subject to change, default settings, but a 'feature' will be the modularity of the tokenizer system, as you're able to pass a tokenizer_settings instance to your tokenizer_instance, to process files to your desire. the language, though, will be built with the default settings in mind, so irregularities are not guaranteed to be accounted for, although we'd appreciate if you took from your time to test out different scenarios with different tokenizer settings to allow for stability of the project, to thus make it worthwhile.
 
