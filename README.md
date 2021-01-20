@@ -113,4 +113,6 @@ for ease, I use:
 
 all external libraries go to /vendor/, and will be credited here accordingly.
 
-note: there might be modifications to the libraries used to fit our use scenarios.
+note: there might be modifications to the aforementioned libraries within this project to fit our use scenarios.
+
+**note: steadlang uses the GNU libc by default.**
