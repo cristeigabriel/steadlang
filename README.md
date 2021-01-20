@@ -33,3 +33,30 @@ to get rid of the junk created by the compilation (and that includes the stead b
 # customizations
 you're currently able to customize the expected file extension, and a warning level on mismatch. if you make the extension mismatch level 'error', you'll intrerupt the parsing, which'll proceed to free the lexer instance and flush buffers.
 you're also able to ask for read safety, which'll check if the file size is bigger than the lexer read size. upon that, if you proceed to set it to true, it'll log a warning.
+
+# implementation
+if you're too lazy to check [main.c](https://github.com/cristeigabriel/steadlang/blob/main/main.c), here's how a base initialization *should* look:
+```
+  struct _lexer_settings settings;
+  settings.file_expected_extension = ".sl";
+  settings.file_read_safety = true;
+  settings.file_extension_mismatch = serious_warning;
+
+  struct _lexer_instance *instance =
+      (struct _lexer_instance *)malloc(sizeof(struct _lexer_instance));
+
+  if (instance == NULL) {
+    logger_log(error, "failed to initialize instance (%p)\n", &instance);
+    return 0;
+  }
+
+  instance->lexer_settings = settings;
+
+  if (lexer_initialize(instance, argv[1]))
+    printf("%s\n", instance->file);
+  else
+    logger_log(error, "lexer failed to initialize\n");
+
+  free(instance);
+  logger_flush();
+```
