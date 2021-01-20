@@ -1,7 +1,7 @@
 #include "logger.h"
 
 void logger_log(logger_warning_type warning_level, const char *log, ...) {
-  assert(warning_level >= 0 && warning_level <= 7);
+  assert(warning_level >= stdout_red && warning_level <= stdout_default);
 
   va_list args;
   va_start(args, log);

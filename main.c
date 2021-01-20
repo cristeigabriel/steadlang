@@ -7,12 +7,6 @@ int main(int argc, char **argv) {
     return 0;
   }
 
-  logger_log(stdout_blue, "%d\n", argc);
-  logger_log(stdout_cyan, "hi\n");
-  logger_log(stdout_red, "how\n");
-  logger_log(error, "hello there\n");
-  logger_log(error, "yo\n");
-
   struct _lexer_settings settings;
   settings.file_expected_extension = ".sl";
   settings.file_read_safety = true;

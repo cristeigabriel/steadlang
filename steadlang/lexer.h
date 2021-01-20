@@ -8,7 +8,7 @@
 #include "../utils/filehelpers.h"
 #include "../utils/logger.h"
 
-typedef unsigned int lexer_size_type;
+typedef unsigned long long lexer_size_type;
 
 struct _lexer_settings {
   /**
