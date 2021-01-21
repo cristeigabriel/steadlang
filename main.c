@@ -40,7 +40,7 @@ int main(int argc, char **argv) {
   struct _lexer_settings lexer_settings;
   lexer_settings.file_expected_extension = ".sl";
   lexer_settings.file_extension_mismatch = warning;
-  lexer_settings.file_read_safety = true;
+  lexer_settings.file_read_safety_log = true;
   lexer_settings.file_read_sizes_mismatch = error;
   lexer_settings.file_size_too_big_error = true;
 
@@ -54,11 +54,16 @@ int main(int argc, char **argv) {
   tokenizer_instance->tokenizer_settings = tokenizer_settings;
   tokenizer_instance->lexer = lexer_instance;
 
+  struct _krate_settings krate_settings;
+  krate_settings.file_succesfully_parsed_counter_log = true;
+  krate_settings.file_parsed_passed_size_mismatch = warning;
+
+  krate_instance->krate_settings = krate_settings;
   krate_instance->files = vector_create();
 
-  //vector_add(&krate_instance->files, "test.slk");
-  //vector_add(&krate_instance->files, "test.slk");
-  //vector_add(&krate_instance->files, "test.slk");
+  vector_add(&krate_instance->files, "test.slc");
+  vector_add(&krate_instance->files, "test.slk");
+  vector_add(&krate_instance->files, "test.slk");
 
   if (lexer_initialize(lexer_instance, argv[1]))
     printf("%s\n", lexer_instance->file);

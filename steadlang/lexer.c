@@ -60,11 +60,13 @@ bool lexer_initialize(struct _lexer_instance *instance, const char *filename) {
 
     instance->file[file_size] = '\0';
 
-    if (file_size != read_size && instance->lexer_settings.file_read_safety) {
+    if (file_size != read_size &&
+        instance->lexer_settings.file_read_safety_log) {
       logger_log(instance->lexer_settings.file_read_sizes_mismatch,
                  "failed reading entirety of %s\n", filename);
 
-      if (instance->lexer_settings.file_read_sizes_mismatch == error)
+      if (instance->lexer_settings.file_read_safety_log &&
+          instance->lexer_settings.file_read_sizes_mismatch == error)
         return false;
     }
 

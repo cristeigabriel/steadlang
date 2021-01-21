@@ -25,7 +25,7 @@ struct _lexer_settings {
    * @brief check if file_size > read_size
    *
    */
-  bool file_read_safety;
+  bool file_read_safety_log;
 
   /**
    * @brief level of error/logger color for file/read mismatches
