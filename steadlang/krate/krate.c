@@ -47,7 +47,7 @@ bool krate_initialize(struct _krate_instance *instance) {
             0 &&
         strcmp(extension, "") != 0) {
       logger_log(instance->lexer[i]->lexer_settings.file_extension_mismatch,
-                 "file extension is not '%s' but '%s'\n",
+                 "file extension is not '%s' but '%s', skipping file\n",
                  instance->lexer[i]->lexer_settings.file_expected_extension,
                  extension);
       if (instance->lexer[i]->lexer_settings.file_extension_mismatch == error)
@@ -71,15 +71,17 @@ bool krate_initialize(struct _krate_instance *instance) {
     }
   }
 
-  if (instance->krate_settings.file_succesfully_parsed_counter_log)
+  if (instance->krate_settings.file_succesfully_parsed_counter_log &&
+      instance->counter != vector_size(instance->files))
     logger_log(instance->krate_settings.file_parsed_passed_size_mismatch,
                "krate: counted: %ld, passed: %ld\n", instance->counter,
                vector_size(instance->files));
 
   if (instance->counter != vector_size(instance->files) &&
       instance->krate_settings.file_succesfully_parsed_counter_log &&
-      instance->krate_settings.file_parsed_passed_size_mismatch == error)
+      instance->krate_settings.file_parsed_passed_size_mismatch == error) {
     return false;
+  }
 }
 
 void krate_release_bunch(struct _krate_instance *instance) {

@@ -61,9 +61,9 @@ int main(int argc, char **argv) {
   krate_instance->krate_settings = krate_settings;
   krate_instance->files = vector_create();
 
-  vector_add(&krate_instance->files, "test.slc");
-  vector_add(&krate_instance->files, "test.slk");
-  vector_add(&krate_instance->files, "test.slk");
+  // vector_add(&krate_instance->files, "test.slk");
+  // vector_add(&krate_instance->files, "test.slk");
+  // vector_add(&krate_instance->files, "test.slc");
 
   if (lexer_initialize(lexer_instance, argv[1]))
     printf("%s\n", lexer_instance->file);
@@ -80,7 +80,7 @@ int main(int argc, char **argv) {
   }
 
   if (krate_initialize(krate_instance))
-    ;
+    logger_log(stdout_blue, "%s\n", krate_instance->lexer[0]->file);
   else {
     logger_log(error, "krate initializer returned false\n");
     goto destruct;

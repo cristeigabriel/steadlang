@@ -21,14 +21,14 @@
 
 typedef unsigned int logger_warning_type;
 
-static const char *logger_colors[] = {/*red*/ "\x1B[31m",
-                                      /*green*/ "\x1B[32m",
-                                      /*yellow*/ "\x1B[33m",
-                                      /*blue*/ "\x1B[34m",
-                                      /*magenta*/ "\x1B[35m",
-                                      /*cyan*/ "\x1B[36m",
-                                      /*white*/ "\x1B[37m",
-                                      /*stdout_default*/ "\x1B[0m"};
+static const char *logger_colors[8] = {/*stdout_red*/ "\x1B[31m",
+                                       /*stdout_green*/ "\x1B[32m",
+                                       /*stdout_yellow*/ "\x1B[33m",
+                                       /*stdout_blue*/ "\x1B[34m",
+                                       /*stdout_magenta*/ "\x1B[35m",
+                                       /*stdout_cyan*/ "\x1B[36m",
+                                       /*stdout_white*/ "\x1B[37m",
+                                       /*stdout_default*/ "\x1B[0m"};
 
 /**
  * @brief log events with a warning level (which is basically a wrapper for
