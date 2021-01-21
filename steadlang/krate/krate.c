@@ -1,5 +1,8 @@
 #include "krate.h"
 
+static bool krate_passed_files_check = false;
+static bool krate_passed_extension_check = false;
+
 bool krate_initialize(struct _krate_instance *instance) {
   // to allow multiple reinitializations which will eventually
   // also need freeing, and with our method it can only be done iin

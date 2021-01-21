@@ -14,8 +14,6 @@ extern int errno;
 
 typedef long long lexer_size_type;
 
-static bool lexer_reached_file_initialization = false;
-
 struct _lexer_settings {
   /**
    * @brief the expected extension of passed file
@@ -75,6 +73,12 @@ struct _lexer_instance {
  * @return bool state of initialization
  */
 bool lexer_initialize(struct _lexer_instance *instance, const char *filename);
+
+/**
+ * @brief release byproducts of lexer instance
+ *
+ * @param instance our instance
+ */
 void lexer_release_bunch(struct _lexer_instance *instance);
 
 #endif

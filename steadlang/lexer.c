@@ -1,5 +1,7 @@
 #include "lexer.h"
 
+static bool lexer_reached_file_initialization = false;
+
 bool lexer_initialize(struct _lexer_instance *instance, const char *filename) {
   lexer_reached_file_initialization = false;
 

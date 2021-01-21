@@ -10,9 +10,6 @@
 
 #include "../../vendor/vector.h"
 
-static bool krate_passed_files_check = false;
-static bool krate_passed_extension_check = false;
-
 struct _krate_scope {};
 
 struct _krate_settings {
