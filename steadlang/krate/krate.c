@@ -87,11 +87,11 @@ bool krate_initialize(struct _krate_instance *instance) {
 void krate_release_bunch(struct _krate_instance *instance) {
   if (krate_passed_files_check) {
     // memory leak, to fix
-    // for (vec_size_t i = 0; i < vector_size(instance->lexer); ++i) {
-    //   if (i < instance->counter) {
-    //     free(instance->lexer[i]->file);
-    //   }
-    // }
+    for (vec_size_t i = 0; i < vector_size(instance->lexer); ++i) {
+      if (i < instance->counter) {
+        free(instance->lexer[i]->file);
+      }
+    }
   }
 
   if (krate_passed_extension_check) {

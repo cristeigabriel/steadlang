@@ -80,7 +80,7 @@ int main(int argc, char **argv) {
   }
 
   if (krate_initialize(krate_instance))
-    ;
+    logger_log(stdout_blue, "%s\n", krate_instance->lexer[0]->file);
   else {
     logger_log(error, "krate initializer returned false\n");
     goto destruct;
