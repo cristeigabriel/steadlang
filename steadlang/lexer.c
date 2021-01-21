@@ -1,9 +1,14 @@
 #include "lexer.h"
+#include "tokenizer.h"
 
 static bool lexer_reached_file_initialization = false;
+static bool lexer_reached_tokenizer_initialization = false;
 
-bool lexer_initialize(struct _lexer_instance *instance, const char *filename) {
+bool lexer_initialize(struct _lexer_instance *instance,
+                      struct _tokenizer_settings tokenizer_settings,
+                      const char *filename) {
   lexer_reached_file_initialization = false;
+  lexer_reached_tokenizer_initialization = false;
 
   if (instance == NULL) {
     logger_log(error,
@@ -82,11 +87,47 @@ bool lexer_initialize(struct _lexer_instance *instance, const char *filename) {
     }
   }
 
+  if (file != NULL) {
+    instance->tokenizer_instance = (struct _tokenizer_instance *)malloc(
+        sizeof(struct _tokenizer_instance));
+
+    lexer_reached_tokenizer_initialization = true;
+
+    if (instance->tokenizer_instance == NULL) {
+      logger_log(error,
+                 "failed to get tokenizer instance (%p), returned NULL\n",
+                 &instance->tokenizer_instance);
+      return false;
+    }
+
+    instance->tokenizer_instance->lexer_instance = instance;
+
+    if (tokenizer_initialize(instance->tokenizer_instance)) {
+      instance->tokenizer_instance->tokenizer_settings = tokenizer_settings;
+
+      for (vec_size_t i = 0;
+           i < vector_size(
+                   instance->tokenizer_instance->tokenizer_structure.scopes);
+           ++i) {
+        logger_log(stdout_blue, "%d: %s\n", i,
+                   instance->tokenizer_instance->tokenizer_structure.scopes[i]);
+      }
+
+    } else {
+      logger_log(error, "tokenizer initializer returned false\n");
+      return false;
+    }
+  }
+
   return true;
 }
 
 void lexer_release_bunch(struct _lexer_instance *instance) {
   if (lexer_reached_file_initialization) {
     free(instance->file);
+  }
+
+  if (lexer_reached_tokenizer_initialization) {
+    free(instance->tokenizer_instance);
   }
 }

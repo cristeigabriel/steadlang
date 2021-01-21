@@ -10,9 +10,6 @@ int main(int argc, char **argv) {
   struct _lexer_instance *lexer_instance =
       (struct _lexer_instance *)malloc(sizeof(struct _lexer_instance));
 
-  struct _tokenizer_instance *tokenizer_instance =
-      (struct _tokenizer_instance *)malloc(sizeof(struct _tokenizer_instance));
-
   struct _krate_instance *krate_instance =
       (struct _krate_instance *)malloc(sizeof(struct _krate_instance));
 
@@ -20,13 +17,6 @@ int main(int argc, char **argv) {
     logger_log(error,
                "failed to initialize lexer instance (%p), returned NULL\n",
                &lexer_instance);
-    goto destruct;
-  }
-
-  if (tokenizer_instance == NULL) {
-    logger_log(error,
-               "failed to initialize tokenizer instance (%p), returned NULL\n",
-               &tokenizer_instance);
     goto destruct;
   }
 
@@ -49,10 +39,12 @@ int main(int argc, char **argv) {
   struct _tokenizer_settings tokenizer_settings;
   tokenizer_settings.krate = "krate";
   tokenizer_settings.scope = "scope";
-  tokenizer_settings.scope_delimiter = "::";
-
-  tokenizer_instance->tokenizer_settings = tokenizer_settings;
-  tokenizer_instance->lexer = lexer_instance;
+  tokenizer_settings.scope_opener = "{";
+  tokenizer_settings.scope_ender = "}";
+  tokenizer_settings.scope_return_type_delimiter = "->";
+  tokenizer_settings.arglist_opener = "(";
+  tokenizer_settings.arglist_ender = ")";
+  tokenizer_settings.argument_type_delimiter = ":";
 
   struct _krate_settings krate_settings;
   krate_settings.file_succesfully_parsed_counter_log = true;
@@ -65,17 +57,10 @@ int main(int argc, char **argv) {
   // vector_add(&krate_instance->files, "test.slk");
   // vector_add(&krate_instance->files, "test.slc");
 
-  if (lexer_initialize(lexer_instance, argv[1]))
-    printf("%s\n", lexer_instance->file);
-  else {
-    logger_log(error, "lexer initializer returned false\n");
-    goto destruct;
-  }
-
-  if (tokenizer_initialize(tokenizer_instance))
+  if (lexer_initialize(lexer_instance, tokenizer_settings, argv[1]))
     ;
   else {
-    logger_log(error, "tokenizer initializer returned false\n");
+    logger_log(error, "lexer initializer returned false\n");
     goto destruct;
   }
 
@@ -89,7 +74,6 @@ int main(int argc, char **argv) {
 destruct:
   lexer_release_bunch(lexer_instance);
   free(lexer_instance);
-  free(tokenizer_instance);
   krate_release_bunch(krate_instance);
   free(krate_instance);
   logger_flush();

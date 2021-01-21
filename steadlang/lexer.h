@@ -10,6 +10,10 @@
 #include "../utils/filehelpers.h"
 #include "../utils/logger.h"
 
+struct _tokenizer_settings;
+struct _tokenizer_structure;
+struct _tokenizer_instance;
+
 extern int errno;
 
 typedef long long lexer_size_type;
@@ -62,23 +66,18 @@ struct _lexer_instance {
    *
    */
   struct _lexer_settings lexer_settings;
+
+  /**
+   * @brief tokenizer instance to analyze file structure
+   *
+   */
+  struct _tokenizer_instance *tokenizer_instance;
 };
 
-/**
- * @brief initialize instance accordingly
- *
- * @param instance our instance
- * @param filename our file's name
- *
- * @return bool state of initialization
- */
-bool lexer_initialize(struct _lexer_instance *instance, const char *filename);
+bool lexer_initialize(struct _lexer_instance *instance,
+                      struct _tokenizer_settings tokenizer_settings,
+                      const char *filename);
 
-/**
- * @brief release byproducts of lexer instance
- *
- * @param instance our instance
- */
 void lexer_release_bunch(struct _lexer_instance *instance);
 
 #endif

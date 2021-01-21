@@ -3,6 +3,8 @@
 static bool krate_passed_files_check = false;
 static bool krate_passed_extension_check = false;
 
+// i'll have to do structural changes to tokenizer or write krate's
+// own tokenizer for this
 bool krate_initialize(struct _krate_instance *instance) {
   // to allow multiple reinitializations which will eventually
   // also need freeing, and with our method it can only be done iin
@@ -58,17 +60,17 @@ bool krate_initialize(struct _krate_instance *instance) {
       passed_counter_once = true;
     }
 
-    if (lexer_initialize(instance->lexer[i], instance->files[i])) {
-      krate_passed_files_check = true;
-      if (!passed_counter_once) {
-        instance->counter++;
-        passed_counter_once = true;
-      }
-    } else {
-      logger_log(error, "lexer initializer returned false\n");
-      krate_passed_files_check = true;
-      continue;
-    }
+    // if (lexer_initialize(instance->lexer[i], instance->files[i])) {
+    //   krate_passed_files_check = true;
+    //   if (!passed_counter_once) {
+    //     instance->counter++;
+    //     passed_counter_once = true;
+    //   }
+    // } else {
+    //   logger_log(error, "lexer initializer returned false\n");
+    //   krate_passed_files_check = true;
+    //   continue;
+    // }
   }
 
   if (instance->krate_settings.file_succesfully_parsed_counter_log &&
@@ -86,7 +88,6 @@ bool krate_initialize(struct _krate_instance *instance) {
 
 void krate_release_bunch(struct _krate_instance *instance) {
   if (krate_passed_files_check) {
-    // memory leak, to fix
     for (vec_size_t i = 0; i < vector_size(instance->lexer); ++i) {
       if (i < instance->counter) {
         free(instance->lexer[i]->file);

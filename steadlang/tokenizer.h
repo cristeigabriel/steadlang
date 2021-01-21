@@ -9,49 +9,48 @@
 
 #include "../utils/logger.h"
 
-#include "lexer.h"
+struct _lexer_instance;
+struct _lexer_settings;
 
 struct _tokenizer_settings {
-  /**
-   * @brief krate system identifier
-   *
-   */
   char *krate;
-
-  /**
-   * @brief scope system identifier
-   *
-   */
   char *scope;
+  char *scope_opener;
+  char *scope_ender;
+  char *scope_return_type_delimiter;
+  char *arglist_opener;
+  char *arglist_ender;
+  char *argument_type_delimiter;
+};
 
-  /**
-   * @brief scope system delimiter
-   *
-   */
-  char *scope_delimiter;
+struct _tokenizer_structure {
+  char **scopes;
+  char **scope_types;
+  char **scope_arguments;
+  char **scope_argument_types;
 };
 
 struct _tokenizer_instance {
   /**
-   * @brief lexer instance to get lexed file
+   * @brief tokenizer lexer instance to get file
    *
    */
-  struct _lexer_instance *lexer;
-
+  struct _lexer_instance *lexer_instance;
   /**
    * @brief tokenizer settings for delimiters/identifiers
    *
    */
   struct _tokenizer_settings tokenizer_settings;
+
+  /**
+   * @brief tokenizer structure to add contained stuff
+   *
+   */
+  struct _tokenizer_structure tokenizer_structure;
 };
 
-/**
- * @brief make an instance that tokenizes the lexer instance lexed file
- * according to tokenizer_settings
- *
- * @param instance tokenizer instance to initialize
- * @return bool state of initialization
- */
 bool tokenizer_initialize(struct _tokenizer_instance *instance);
+
+void tokenizer_release_bunch(struct _tokenizer_instance *instance);
 
 #endif
