@@ -66,3 +66,8 @@ all external libraries go to /vendor/, and will be credited here accordingly.
 note: there might be modifications to the aforementioned libraries within this project to fit our use scenarios.
 
 **note: steadlang uses the GNU libc by default.**
+
+# immediate to-dos (that i shouldn't forget)
+make ``_krate_instance's char **files``  a hashmap instead of a vector container.
+
+note for others: it was made a vector for testing.
