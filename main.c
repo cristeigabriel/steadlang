@@ -13,6 +13,9 @@ int main(int argc, char **argv) {
   struct _tokenizer_instance *tokenizer_instance =
       (struct _tokenizer_instance *)malloc(sizeof(struct _tokenizer_instance));
 
+  struct _krate_instance *krate_instance =
+      (struct _krate_instance *)malloc(sizeof(struct _krate_instance));
+
   if (lexer_instance == NULL) {
     logger_log(error,
                "failed to initialize lexer instance (%p), returned NULL\n",
@@ -24,6 +27,13 @@ int main(int argc, char **argv) {
     logger_log(error,
                "failed to initialize tokenizer instance (%p), returned NULL\n",
                &tokenizer_instance);
+    goto destruct;
+  }
+
+  if (krate_instance == NULL) {
+    logger_log(error,
+               "failed to initialize krate instance (%p), returned NULL\n",
+               &krate_instance);
     goto destruct;
   }
 
@@ -44,6 +54,12 @@ int main(int argc, char **argv) {
   tokenizer_instance->tokenizer_settings = tokenizer_settings;
   tokenizer_instance->lexer = lexer_instance;
 
+  krate_instance->files = vector_create();
+
+  vector_add(&krate_instance->files, "test.slk");
+  vector_add(&krate_instance->files, "test.slk");
+  vector_add(&krate_instance->files, "test.slk");
+
   if (lexer_initialize(lexer_instance, argv[1]))
     printf("%s\n", lexer_instance->file);
   else {
@@ -58,10 +74,19 @@ int main(int argc, char **argv) {
     goto destruct;
   }
 
+  if (krate_initialize(krate_instance))
+    ;
+  else {
+    logger_log(error, "krate initializer returned false\n");
+    goto destruct;
+  }
+
 destruct:
   free(lexer_instance->file);
   free(lexer_instance);
   free(tokenizer_instance);
+  krate_release_bunch(krate_instance);
+  free(krate_instance);
   logger_flush();
 
   return 0;

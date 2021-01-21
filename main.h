@@ -3,6 +3,7 @@
 
 #include "vendor/vector.h"
 
+#include "steadlang/krate/krate.h"
 #include "steadlang/lexer.h"
 #include "steadlang/tokenizer.h"
 #include "utils/filehelpers.h"

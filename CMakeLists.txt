@@ -10,7 +10,8 @@ include_directories(${CMAKE_SOURCE_DIR})
 add_executable(stead
   vendor/vector.c
   utils/filehelpers.c
-  utils/logger.c  
+  utils/logger.c 
+  steadlang/krate/krate.c 
   steadlang/tokenizer.c
   steadlang/lexer.c
 
