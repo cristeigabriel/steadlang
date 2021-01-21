@@ -55,7 +55,19 @@ struct _krate_instance {
   vec_size_t counter;
 };
 
+/**
+ * @brief make a krate instance which can conver multiple files/scopes/etc
+ *
+ * @param instance our instance
+ * @return bool state of initialization
+ */
 bool krate_initialize(struct _krate_instance *instance);
+
+/**
+ * @brief release byproducts of krate instance
+ *
+ * @param instance our instance
+ */
 void krate_release_bunch(struct _krate_instance *instance);
 
 #endif

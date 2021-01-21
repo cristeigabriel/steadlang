@@ -87,7 +87,7 @@ int main(int argc, char **argv) {
   }
 
 destruct:
-  free(lexer_instance->file);
+  lexer_release_bunch(lexer_instance);
   free(lexer_instance);
   free(tokenizer_instance);
   krate_release_bunch(krate_instance);

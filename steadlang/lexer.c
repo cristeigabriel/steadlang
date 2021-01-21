@@ -1,6 +1,8 @@
 #include "lexer.h"
 
 bool lexer_initialize(struct _lexer_instance *instance, const char *filename) {
+  lexer_reached_file_initialization = false;
+
   if (instance == NULL) {
     logger_log(error,
                "failed to initialize lexer instance (%p), returned NULL\n",
@@ -52,6 +54,8 @@ bool lexer_initialize(struct _lexer_instance *instance, const char *filename) {
     rewind(file);
 
     instance->file = (char *)malloc(sizeof(char) * (file_size + 1));
+    lexer_reached_file_initialization = true;
+
     read_size = fread(instance->file, sizeof(char), file_size, file);
     if (read_size == 0) {
       logger_log(error, "failed at fread, returned 0\n");
@@ -77,4 +81,10 @@ bool lexer_initialize(struct _lexer_instance *instance, const char *filename) {
   }
 
   return true;
+}
+
+void lexer_release_bunch(struct _lexer_instance *instance) {
+  if (lexer_reached_file_initialization) {
+    free(instance->file);
+  }
 }

@@ -4,8 +4,8 @@
 //  Created by Mashpoe on 2/26/19.
 //
 
-#ifndef vec_h
-#define vec_h
+#ifndef vectorheader
+#define vectorheader
 
 #include <stdbool.h>
 #include <stdlib.h>
@@ -80,4 +80,4 @@ vec_size_t vector_size(vector vec);
 
 vec_size_t vector_get_alloc(vector vec);
 
-#endif /* vec_h */
+#endif
