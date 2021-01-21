@@ -56,9 +56,9 @@ int main(int argc, char **argv) {
 
   krate_instance->files = vector_create();
 
-  vector_add(&krate_instance->files, "test.slk");
-  vector_add(&krate_instance->files, "test.slk");
-  vector_add(&krate_instance->files, "test.slk");
+  //vector_add(&krate_instance->files, "test.slk");
+  //vector_add(&krate_instance->files, "test.slk");
+  //vector_add(&krate_instance->files, "test.slk");
 
   if (lexer_initialize(lexer_instance, argv[1]))
     printf("%s\n", lexer_instance->file);
