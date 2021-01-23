@@ -57,6 +57,9 @@ krate is the in-the-plans binding system from C to steadlang. more information t
 # implementation
 check [main.c](https://github.com/cristeigabriel/steadlang/blob/main/main.c).
 
+# development
+concerned by inactivity? check out the [projects](https://github.com/cristeigabriel/steadlang/projects) page.
+
 # external libraries
 for ease, I use:
 - [a C, small, vector library by Mashpoe](https://github.com/Mashpoe/c-vector)
