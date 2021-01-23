@@ -58,7 +58,7 @@ krate is the in-the-plans binding system from C to steadlang. more information t
 check [main.c](https://github.com/cristeigabriel/steadlang/blob/main/main.c).
 
 # development
-concerned by inactivity? check out the [projects](https://github.com/cristeigabriel/steadlang/projects) page.
+concerned by inactivity? check out the [projects](https://github.com/cristeigabriel/steadlang/projects) page. things might be in early development and not ready to be pushed to git, thus they will not be pushed until they're ready, so to keep up people, i'll regularely update the projects page with my progress.
 
 # external libraries
 for ease, I use:
