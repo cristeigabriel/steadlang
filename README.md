@@ -6,6 +6,10 @@ steadlang - a simple in-development toy language written in C, only planned to b
 # build tests
 ![Linux](https://github.com/cristeigabriel/steadlang/workflows/CMake/badge.svg)
 
+# locally tested on
+Ubuntu 20.04 LTS (Visual Studo Code, G++)
+Windows 10 20H1 (Visual Studio Community 2019, Visual Studio Code, MSVC, MinGW)
+
 # in-development
 there's currently no 'language', the tokenizer is in development, and so is the krates system.
 
