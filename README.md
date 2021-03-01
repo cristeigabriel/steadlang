@@ -8,6 +8,7 @@ steadlang - a simple in-development toy language written in C, only planned to b
 
 # locally tested on
 Ubuntu 20.04 LTS (Visual Studo Code, G++)
+
 Windows 10 20H1 (Visual Studio Community 2019, Visual Studio Code, MSVC, MinGW)
 
 # in-development
