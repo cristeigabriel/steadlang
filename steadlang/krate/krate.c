@@ -38,7 +38,7 @@ bool krate_initialize(struct _krate_instance *instance) {
   static bool passed_counter_once = false;
   passed_counter_once = false;
   for (vec_size_t i = 0; i < vector_size(instance->files); ++i) {
-    vector_add(&instance->lexer, (struct _lexer_instance *)malloc(
+    _vector_add(&instance->lexer, (struct _lexer_instance *)malloc(
                                      sizeof(struct _lexer_instance)));
 
     instance->lexer[i]->lexer_settings = krate_lexer_settings;

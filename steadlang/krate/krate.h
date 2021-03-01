@@ -10,7 +10,9 @@
 
 #include "../../vendor/vector.h"
 
-struct _krate_scope {};
+struct _krate_scope {
+	bool foo;
+};
 
 struct _krate_settings {
   /**

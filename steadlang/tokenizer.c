@@ -25,7 +25,7 @@ bool tokenizer_initialize(struct _tokenizer_instance *instance) {
     char *scope = strtok(file_copy, instance->tokenizer_settings.scope_opener);
 
     while (scope != NULL) {
-      vector_add(&instance->tokenizer_structure.scopes, scope);
+      _vector_add(&instance->tokenizer_structure.scopes, scope);
       scope = strtok(NULL, instance->tokenizer_settings.scope);
     }
   }
